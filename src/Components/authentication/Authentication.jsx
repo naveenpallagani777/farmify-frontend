@@ -1,4 +1,5 @@
 import "./Authentication.css"
+import useAuthHook from "../../AppHooks/useAuthHook";
 
 import { useState } from "react";
 
@@ -6,6 +7,13 @@ const AuthPage = () => {
 
     let [id ,updateId] = useState("Farmer");
     let [opration,updateOpration] = useState(true);
+
+    let {signup} = useAuthHook();
+
+    const SubmitHandler = (event) => {
+        event.preventDefault();
+        signup();
+    }
 
     return(<>
         <div className="AuthPage">
@@ -21,10 +29,10 @@ const AuthPage = () => {
                     <option value="Farmer">Farmer</option>
                     <option value="Delar">Delar</option>
                 </select>
-                <input type="text" placeholder={`${id} ID`}/>
+                <input type="text" placeholder={`${id} Phone Number`}/>
+                {!opration && <input type="password" placeholder="Name"/>}
                 <input type="password" placeholder="Password"/>
-                {!opration && <input type="password" placeholder="Re-enter Password"/>}
-                <button><h3>{opration ? "LOGIN":"SIGN UP"}</h3></button>
+                <button onClick={SubmitHandler}><h3>{opration ? "LOGIN":"SIGN UP"}</h3></button>
                 <div className="line"><h4>{opration ? "Don't have account ?":"Already have account ?"}</h4><h4 onClick={() => {updateOpration(!opration)}}>{opration ? "Sign up":"Login"}</h4></div>
                 <h4>{opration ? "forget your password ?":""}</h4>
 
